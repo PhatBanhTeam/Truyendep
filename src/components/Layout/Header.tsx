@@ -1,16 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { Search, Menu, BookOpen, Home, TrendingUp, Clock, Star, Filter } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { api } from '../../services/api';
+import React, { useState, useEffect } from "react";
+import {
+  Search,
+  Menu,
+  BookOpen,
+  Home,
+  TrendingUp,
+  Clock,
+  Star,
+  Filter,
+} from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { api } from "../../services/api";
 
 interface HeaderProps {
   onSearch?: (query: string) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<{name: string, slug: string}[]>([]);
   const [showCategoriesDropdown, setShowCategoriesDropdown] = useState(false);
   const navigate = useNavigate();
 
@@ -21,29 +30,29 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
         const categoriesData = await api.getCategories();
         setCategories(categoriesData.slice(0, 20)); // Show more categories
       } catch (error) {
-        console.error('Error loading categories:', error);
+        console.error("Error loading categories:", error);
         // Fallback to default genres
         const defaultGenres = [
-          { name: 'Action', slug: 'action' },
-          { name: 'Adventure', slug: 'adventure' },
-          { name: 'Comedy', slug: 'comedy' },
-          { name: 'Drama', slug: 'drama' },
-          { name: 'Fantasy', slug: 'fantasy' },
-          { name: 'Horror', slug: 'horror' },
-          { name: 'Romance', slug: 'romance' },
-          { name: 'Sci-Fi', slug: 'sci-fi' },
-          { name: 'Slice of Life', slug: 'slice-of-life' },
-          { name: 'Sports', slug: 'sports' },
-          { name: 'Supernatural', slug: 'supernatural' },
-          { name: 'Thriller', slug: 'thriller' },
-          { name: 'Mystery', slug: 'mystery' },
-          { name: 'Historical', slug: 'historical' },
-          { name: 'School Life', slug: 'school-life' },
-          { name: 'Martial Arts', slug: 'martial-arts' },
-          { name: 'Mecha', slug: 'mecha' },
-          { name: 'Psychological', slug: 'psychological' },
-          { name: 'Seinen', slug: 'seinen' },
-          { name: 'Shounen', slug: 'shounen' }
+          { name: "Action", slug: "action" },
+          { name: "Adventure", slug: "adventure" },
+          { name: "Comedy", slug: "comedy" },
+          { name: "Drama", slug: "drama" },
+          { name: "Fantasy", slug: "fantasy" },
+          { name: "Horror", slug: "horror" },
+          { name: "Romance", slug: "romance" },
+          { name: "Sci-Fi", slug: "sci-fi" },
+          { name: "Slice of Life", slug: "slice-of-life" },
+          { name: "Sports", slug: "sports" },
+          { name: "Supernatural", slug: "supernatural" },
+          { name: "Thriller", slug: "thriller" },
+          { name: "Mystery", slug: "mystery" },
+          { name: "Historical", slug: "historical" },
+          { name: "School Life", slug: "school-life" },
+          { name: "Martial Arts", slug: "martial-arts" },
+          { name: "Mecha", slug: "mecha" },
+          { name: "Psychological", slug: "psychological" },
+          { name: "Seinen", slug: "seinen" },
+          { name: "Shounen", slug: "shounen" },
         ];
         setCategories(defaultGenres);
       }
@@ -65,7 +74,10 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 text-primary-800 hover:text-primary-600 transition-colors">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 text-primary-800 hover:text-primary-600 transition-colors"
+          >
             <div className="relative">
               <BookOpen className="h-8 w-8" />
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full"></div>
@@ -74,7 +86,9 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
               <span className="font-bold text-xl bg-gradient-to-r from-primary-600 to-purple-600 bg-clip-text text-transparent">
                 TruyenDep
               </span>
-              <div className="text-xs text-gray-500 -mt-1">Đọc truyện miễn phí</div>
+              <div className="text-xs text-gray-500 -mt-1">
+                Đọc truyện miễn phí
+              </div>
             </div>
           </Link>
 
@@ -102,33 +116,47 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-6">
-            <Link to="/" className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium">
+            <Link
+              to="/"
+              className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
               <Home className="h-4 w-4" />
               <span>Trang chủ</span>
             </Link>
-            <Link to="/trending" className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium">
+            <Link
+              to="/trending"
+              className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
               <TrendingUp className="h-4 w-4" />
               <span>Thịnh hành</span>
             </Link>
-            <Link to="/recent" className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium">
+            <Link
+              to="/recent"
+              className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
               <Clock className="h-4 w-4" />
               <span>Mới cập nhật</span>
             </Link>
-            <Link to="/top-rated" className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium">
+            <Link
+              to="/top-rated"
+              className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
               <Star className="h-4 w-4" />
               <span>Đánh giá cao</span>
             </Link>
-            
+
             {/* Categories Dropdown */}
             <div className="relative">
               <button
-                onClick={() => setShowCategoriesDropdown(!showCategoriesDropdown)}
+                onClick={() =>
+                  setShowCategoriesDropdown(!showCategoriesDropdown)
+                }
                 className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium"
               >
                 <Filter className="h-4 w-4" />
                 <span>Thể loại</span>
               </button>
-              
+
               {showCategoriesDropdown && (
                 <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 p-4 z-50">
                   <div className="grid grid-cols-2 gap-2 max-h-64 overflow-y-auto">
@@ -145,6 +173,16 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Auth buttons */}
+            <div className="hidden lg:flex items-center ml-6">
+              <Link
+                to="/login"
+                className="px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-lg shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+              >
+                Đăng nhập
+              </Link>
             </div>
           </nav>
 
@@ -177,25 +215,39 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-200 animate-slide-up">
           <div className="px-4 py-4 space-y-3">
-            <Link to="/" className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors font-medium">
+            <Link
+              to="/"
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
               <Home className="h-4 w-4" />
               <span>Trang chủ</span>
             </Link>
-            <Link to="/trending" className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors font-medium">
+            <Link
+              to="/trending"
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
               <TrendingUp className="h-4 w-4" />
               <span>Thịnh hành</span>
             </Link>
-            <Link to="/recent" className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors font-medium">
+            <Link
+              to="/recent"
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
               <Clock className="h-4 w-4" />
               <span>Mới cập nhật</span>
             </Link>
-            <Link to="/top-rated" className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors font-medium">
+            <Link
+              to="/top-rated"
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
               <Star className="h-4 w-4" />
               <span>Đánh giá cao</span>
             </Link>
-            
+
             <div className="pt-3 border-t border-gray-200">
-              <p className="text-sm font-medium text-gray-900 mb-3">Thể loại phổ biến</p>
+              <p className="text-sm font-medium text-gray-900 mb-3">
+                Thể loại phổ biến
+              </p>
               <div className="grid grid-cols-2 gap-2">
                 {categories.slice(0, 12).map((category) => (
                   <Link
@@ -207,6 +259,15 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
                   </Link>
                 ))}
               </div>
+            </div>
+
+            <div className="pt-3 border-t border-gray-200">
+              <Link
+                to="/login"
+                className="block w-full text-center px-4 py-2 text-sm font-medium text-white bg-primary-600 border border-transparent rounded-lg shadow-sm hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+              >
+                Đăng nhập
+              </Link>
             </div>
           </div>
         </div>
