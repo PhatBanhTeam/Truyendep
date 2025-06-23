@@ -56,7 +56,7 @@ Sau đó, mở trình duyệt và truy cập vào `http://localhost:5173` (hoặ
 
 ## Ảnh chụp màn hình
 
- ![Trang chủ](![image](https://github.com/user-attachments/assets/414da4c6-713b-411e-81ee-f54d8b77ed61)) | 
+ ![Trang chủ]((https://github.com/user-attachments/assets/414da4c6-713b-411e-81ee-f54d8b77ed61)) | 
  ![Trang Đăng nhập](https://github.com/user-attachments/assets/b4c6cb05-7a1c-4e7b-b1f5-d10ab1064d0f) | 
  ![Trang Đăng ký](https://github.com/user-attachments/assets/ef59d9f5-824f-48b5-804f-53cf49f2ca3e) |
 
