@@ -26,7 +26,7 @@ Dự án này được quản lý và theo dõi tiến độ bằng các công c
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **Routing:** [React Router DOM](https://reactrouter.com/)
 - **Icons:** [Lucide React](https://lucide.dev/)
-- API truyen:** [otruyen](https://docs.otruyenapi.com/#/comic/get_truyen_tranh__slug_)
+- **API truyen:** [otruyen](https://docs.otruyenapi.com/#/comic/get_truyen_tranh__slug_)
 
 ## Hướng dẫn cài đặt và chạy Project
 
@@ -52,3 +52,12 @@ npm install
 npm run dev
 ```
 Sau đó, mở trình duyệt và truy cập vào `http://localhost:5173` (hoặc cổng khác được hiển thị trong terminal).
+
+
+## Ảnh chụp màn hình
+
+ ![Trang chủ](![image](https://github.com/user-attachments/assets/414da4c6-713b-411e-81ee-f54d8b77ed61)) | 
+ ![Trang Đăng nhập](https://github.com/user-attachments/assets/b4c6cb05-7a1c-4e7b-b1f5-d10ab1064d0f) | 
+ ![Trang Đăng ký](https://github.com/user-attachments/assets/ef59d9f5-824f-48b5-804f-53cf49f2ca3e) |
+
+
