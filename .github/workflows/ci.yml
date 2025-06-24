@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build-and-test:
+  build-and-lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -22,9 +22,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Lint code
+        run: npm run lint
+
       - name: Build project
         run: npm run build
 
-      # Nếu có test, bỏ comment dòng dưới
-      # - name: Run tests
-      #   run: npm test
+# Khi có push hoặc pull request lên nhánh main, workflow sẽ tự động chạy.
+# Các bước: checkout code → cài Node.js → cài dependencies → lint → build.
+# Không có bước test, nên không cần Vitest/Jest.
