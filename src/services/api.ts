@@ -66,7 +66,7 @@ export type MangaDetail = Manga & {
     number: number;
     publishedAt: string;
     views: number;
-    pages: any[];
+    pages: string[];
   }>;
 };
 
