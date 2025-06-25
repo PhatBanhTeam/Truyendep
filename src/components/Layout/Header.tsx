@@ -8,6 +8,7 @@ import {
   Clock,
   Star,
   Filter,
+  History,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
@@ -19,7 +20,9 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [categories, setCategories] = useState<{name: string, slug: string}[]>([]);
+  const [categories, setCategories] = useState<
+    { name: string; slug: string }[]
+  >([]);
   const [showCategoriesDropdown, setShowCategoriesDropdown] = useState(false);
   const navigate = useNavigate();
 
@@ -144,6 +147,13 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
               <Star className="h-4 w-4" />
               <span>Đánh giá cao</span>
             </Link>
+            <Link
+              to="/history"
+              className="flex items-center space-x-1 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
+              <History className="h-4 w-4" />
+              <span>Lịch sử</span>
+            </Link>
 
             {/* Categories Dropdown */}
             <div className="relative">
@@ -242,6 +252,13 @@ export const Header: React.FC<HeaderProps> = ({ onSearch }) => {
             >
               <Star className="h-4 w-4" />
               <span>Đánh giá cao</span>
+            </Link>
+            <Link
+              to="/history"
+              className="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors font-medium"
+            >
+              <History className="h-4 w-4" />
+              <span>Lịch sử</span>
             </Link>
 
             <div className="pt-3 border-t border-gray-200">
