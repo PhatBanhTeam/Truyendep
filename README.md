@@ -30,7 +30,7 @@ Dự án này được quản lý và theo dõi tiến độ bằng các công c
 
 ## Hướng dẫn cài đặt và chạy Project
 
-Để chạy project này ở môi trường local, bạn hãy làm theo các bước sau:
+local
 
 **1. Clone repository về máy:**
 ```bash
