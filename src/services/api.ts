@@ -36,6 +36,7 @@ export interface OTruyenChapter {
     image_file: string;
   }>;
   updatedAt: string;
+  filename: string;
 }
 
 export interface OTruyenCategory {
@@ -45,19 +46,7 @@ export interface OTruyenCategory {
   description: string;
 }
 
-export interface OTruyenChapterData {
-  filename: string;
-  chapter_name: string;
-  chapter_title: string;
-  updatedAt: string;
-}
 
-export interface OTruyenImageData {
-  image_page: number;
-  image_file: string;
-}
-
-export interface TransformedManga {
   id: string;
   title: string;
   description: string;
@@ -69,41 +58,7 @@ export interface TransformedManga {
   views: number;
   rating: number;
   latestChapter: string | null;
-  chapters?: TransformedChapter[];
-}
 
-export interface TransformedChapter {
-  id: string;
-  title: string;
-  number: number;
-  publishedAt: string;
-  views: number;
-  pages: string[];
-}
-
-export interface ReadingHistoryItem {
-  mangaId: string;
-  mangaTitle: string;
-  chapterId: string;
-  chapterTitle: string;
-  coverUrl: string;
-  lastReadAt: string;
-  readCount: number;
-}
-
-// Helper to ensure status is correct type
-function asMangaStatus(
-  status: string
-): "ongoing" | "completed" | "hiatus" | "cancelled" {
-  if (
-    status === "ongoing" ||
-    status === "completed" ||
-    status === "hiatus" ||
-    status === "cancelled"
-  )
-    return status;
-  return "ongoing";
-}
 
 export const api = {
   // Get home page data
@@ -253,7 +208,6 @@ export const api = {
   },
 
   // Transform OTruyen manga data to our format
-  transformManga: (mangaData: OTruyenManga): TransformedManga => {
     return {
       id: mangaData.slug,
       title: mangaData.name,
@@ -270,13 +224,7 @@ export const api = {
   },
 
   // Transform detailed manga data
-  transformMangaDetail: (mangaData: OTruyenManga): TransformedManga => {
-    const transformed = api.transformManga(mangaData);
 
-    // Add chapters if available
-    if (mangaData.chapters && mangaData.chapters.length > 0) {
-      transformed.chapters = mangaData.chapters
-        .map((chapter: OTruyenChapterData) => ({
           id: chapter.filename,
           title: chapter.chapter_title || `Chapter ${chapter.chapter_name}`,
           number: parseFloat(chapter.chapter_name) || 0,
@@ -320,11 +268,7 @@ export const api = {
       if (data.status === "success" && data.data.item.chapter_image) {
         return data.data.item.chapter_image
           .sort(
-            (a: OTruyenImageData, b: OTruyenImageData) =>
-              a.image_page - b.image_page
-          )
-          .map(
-            (img: OTruyenImageData) =>
+
               `https://img.otruyenapi.com/uploads/comics/${data.data.item.chapter_path}/${img.image_file}`
           );
       }
@@ -338,60 +282,6 @@ export const api = {
 
   // Fallback mock data
   getMockData() {
-    const mockManga = Array.from({ length: 24 }, (_, i) => {
-      const statusArr = ["ongoing", "completed", "hiatus"] as const;
-      const status = asMangaStatus(statusArr[Math.floor(Math.random() * 3)]);
-      return {
-        id: `manga-${i + 1}`,
-        title: [
-          "Attack on Titan",
-          "One Piece",
-          "Naruto",
-          "Dragon Ball",
-          "Bleach",
-          "Death Note",
-          "My Hero Academia",
-          "Demon Slayer",
-          "Tokyo Ghoul",
-          "Hunter x Hunter",
-          "Fullmetal Alchemist",
-          "Jujutsu Kaisen",
-          "Chainsaw Man",
-          "Spy x Family",
-          "Mob Psycho 100",
-          "One Punch Man",
-          "Black Clover",
-          "Fire Force",
-          "Dr. Stone",
-          "Promised Neverland",
-          "Kaguya-sama",
-          "Violet Evergarden",
-          "Your Name",
-          "Weathering With You",
-        ][i],
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        coverUrl: `https://images.pexels.com/photos/${
-          1000000 + i * 100
-        }/pexels-photo-${
-          1000000 + i * 100
-        }.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop`,
-        status,
-        genres: [
-          "Action",
-          "Adventure",
-          "Romance",
-          "Comedy",
-          "Drama",
-          "Fantasy",
-        ].slice(0, Math.floor(Math.random() * 4) + 2),
-        author: "Author Name",
-        year: 2020 + Math.floor(Math.random() * 4),
-        rating: Math.round((Math.random() * 2 + 8) * 10) / 10,
-        lastUpdated: new Date().toISOString(),
-        views: Math.floor(Math.random() * 100000) + 1000,
-      };
-    });
 
     return {
       featured: mockManga.slice(0, 4),
@@ -406,98 +296,4 @@ export const api = {
     return this.getMockData().popular;
   },
 
-  // Reading History Management (Frontend only)
-  readingHistory: {
-    // Get reading history from localStorage
-    getHistory(): ReadingHistoryItem[] {
-      try {
-        const history = localStorage.getItem("reading_history");
-        return history ? JSON.parse(history) : [];
-      } catch (error) {
-        console.error("Error reading history from localStorage:", error);
-        return [];
-      }
-    },
-
-    // Add or update reading history
-    addToHistory(
-      mangaId: string,
-      mangaTitle: string,
-      chapterId: string,
-      chapterTitle: string,
-      coverUrl: string
-    ): void {
-      try {
-        const history = this.getHistory();
-        const existingIndex = history.findIndex(
-          (item) => item.mangaId === mangaId
-        );
-
-        const newItem: ReadingHistoryItem = {
-          mangaId,
-          mangaTitle,
-          chapterId,
-          chapterTitle,
-          coverUrl,
-          lastReadAt: new Date().toISOString(),
-          readCount: 1,
-        };
-
-        if (existingIndex !== -1) {
-          // Update existing item
-          newItem.readCount = history[existingIndex].readCount + 1;
-          history.splice(existingIndex, 1);
-        }
-
-        // Add to beginning of array (most recent first)
-        history.unshift(newItem);
-
-        // Keep only last 50 items
-        if (history.length > 50) {
-          history.splice(50);
-        }
-
-        localStorage.setItem("reading_history", JSON.stringify(history));
-      } catch (error) {
-        console.error("Error saving reading history:", error);
-      }
-    },
-
-    // Remove item from history
-    removeFromHistory(mangaId: string): void {
-      try {
-        const history = this.getHistory();
-        const filteredHistory = history.filter(
-          (item) => item.mangaId !== mangaId
-        );
-        localStorage.setItem(
-          "reading_history",
-          JSON.stringify(filteredHistory)
-        );
-      } catch (error) {
-        console.error("Error removing from reading history:", error);
-      }
-    },
-
-    // Clear all history
-    clearHistory(): void {
-      try {
-        localStorage.removeItem("reading_history");
-      } catch (error) {
-        console.error("Error clearing reading history:", error);
-      }
-    },
-
-    // Get reading progress for a specific manga
-    getReadingProgress(mangaId: string): ReadingHistoryItem | null {
-      const history = this.getHistory();
-      return history.find((item) => item.mangaId === mangaId) || null;
-    },
-
-    // Get recent reads (last 10 items)
-    getRecentReads(): ReadingHistoryItem[] {
-      const history = this.getHistory();
-      return history.slice(0, 10);
-    },
-  },
 };
