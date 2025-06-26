@@ -1,0 +1,33 @@
+name: CI for Vite React App
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint code
+        run: npm run lint
+
+      - name: Build project
+        run: npm run build
+
+# Khi có push hoặc pull request lên nhánh main, workflow sẽ tự động chạy.
+# Các bước: checkout code → cài Node.js → cài dependencies → lint → build.
+# Không có bước test, nên không cần Vitest/Jest.
