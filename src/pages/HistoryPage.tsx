@@ -23,7 +23,7 @@ const HistoryPage: React.FC = () => {
   };
 
   const clearAllHistory = () => {
-    if (window.confirm("Bạn có chắc muốn xóa toàn bộ lịch sử đọc truyện?")) {
+    if (window.confirm("Bạn có chắc muốn xóa tsử đọc truyện?")) {
       api.readingHistory.clearHistory();
       setHistory([]);
     }
