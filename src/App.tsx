@@ -12,6 +12,8 @@ import { RecentPage } from "./pages/RecentPage";
 import { TopRatedPage } from "./pages/TopRatedPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
+import HistoryPage from "./pages/HistoryPage";
 
 function App() {
   const handleSearch = (query: string) => {
@@ -46,6 +48,11 @@ function App() {
                     <Route path="/recent" element={<RecentPage />} />
                     <Route path="/top-rated" element={<TopRatedPage />} />
                     <Route path="/genre/:slug" element={<CategoryPage />} />
+                    <Route path="/history" element={<HistoryPage />} />
+                    <Route
+                      path="/admin/dashboard"
+                      element={<AdminDashboardPage />}
+                    />
                   </Routes>
                 </main>
                 <Footer />

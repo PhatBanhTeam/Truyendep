@@ -20,6 +20,7 @@ export interface OTruyenManga {
     chapter_title: string;
     chapter_api_data: string;
   }>;
+  chapters?: OTruyenChapterData[];
   updatedAt: string;
   view: number;
 }
@@ -45,7 +46,7 @@ export interface OTruyenCategory {
   description: string;
 }
 
-export type Manga = {
+
   id: string;
   title: string;
   description: string;
@@ -57,18 +58,7 @@ export type Manga = {
   views: number;
   rating: number;
   latestChapter: string | null;
-};
 
-export type MangaDetail = Manga & {
-  chapters?: Array<{
-    id: string;
-    title: string;
-    number: number;
-    publishedAt: string;
-    views: number;
-    pages: string[];
-  }>;
-};
 
 export const api = {
   // Get home page data
@@ -218,7 +208,6 @@ export const api = {
   },
 
   // Transform OTruyen manga data to our format
-  transformManga: (mangaData: OTruyenManga): Manga => {
     return {
       id: mangaData.slug,
       title: mangaData.name,
@@ -235,19 +224,7 @@ export const api = {
   },
 
   // Transform detailed manga data
-  transformMangaDetail: (mangaData: OTruyenManga): MangaDetail => {
-    const transformed: MangaDetail = api.transformManga(mangaData);
 
-    // Add chapters if available
-    if (
-      (mangaData as OTruyenManga & { chapters?: OTruyenChapter[] }).chapters &&
-      (mangaData as OTruyenManga & { chapters?: OTruyenChapter[] }).chapters!
-        .length > 0
-    ) {
-      transformed.chapters = (
-        mangaData as OTruyenManga & { chapters: OTruyenChapter[] }
-      ).chapters
-        .map((chapter: OTruyenChapter) => ({
           id: chapter.filename,
           title: chapter.chapter_title || `Chapter ${chapter.chapter_name}`,
           number: parseFloat(chapter.chapter_name) || 0,
@@ -291,11 +268,7 @@ export const api = {
       if (data.status === "success" && data.data.item.chapter_image) {
         return data.data.item.chapter_image
           .sort(
-            (a: { image_page: number }, b: { image_page: number }) =>
-              a.image_page - b.image_page
-          )
-          .map(
-            (img: { image_page: number; image_file: string }) =>
+
               `https://img.otruyenapi.com/uploads/comics/${data.data.item.chapter_path}/${img.image_file}`
           );
       }
@@ -309,58 +282,6 @@ export const api = {
 
   // Fallback mock data
   getMockData() {
-    const mockManga = Array.from({ length: 24 }, (_, i) => ({
-      id: `manga-${i + 1}`,
-      title: [
-        "Attack on Titan",
-        "One Piece",
-        "Naruto",
-        "Dragon Ball",
-        "Bleach",
-        "Death Note",
-        "My Hero Academia",
-        "Demon Slayer",
-        "Tokyo Ghoul",
-        "Hunter x Hunter",
-        "Fullmetal Alchemist",
-        "Jujutsu Kaisen",
-        "Chainsaw Man",
-        "Spy x Family",
-        "Mob Psycho 100",
-        "One Punch Man",
-        "Black Clover",
-        "Fire Force",
-        "Dr. Stone",
-        "Promised Neverland",
-        "Kaguya-sama",
-        "Violet Evergarden",
-        "Your Name",
-        "Weathering With You",
-      ][i],
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-      coverUrl: `https://images.pexels.com/photos/${
-        1000000 + i * 100
-      }/pexels-photo-${
-        1000000 + i * 100
-      }.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop`,
-      status: (["ongoing", "completed", "hiatus"] as const)[
-        Math.floor(Math.random() * 3)
-      ],
-      genres: [
-        "Action",
-        "Adventure",
-        "Romance",
-        "Comedy",
-        "Drama",
-        "Fantasy",
-      ].slice(0, Math.floor(Math.random() * 4) + 2),
-      author: "Author Name",
-      rating: Math.round((Math.random() * 2 + 8) * 10) / 10,
-      lastUpdated: new Date().toISOString(),
-      views: Math.floor(Math.random() * 100000) + 1000,
-      latestChapter: null,
-    }));
 
     return {
       featured: mockManga.slice(0, 4),
@@ -374,4 +295,5 @@ export const api = {
   getMockManga() {
     return this.getMockData().popular;
   },
+
 };

@@ -25,7 +25,7 @@ export const TopRatedPage: React.FC = () => {
       const result = await api.getMangaList('truyen-full', page);
       
       // Sort by rating (mock ratings for now)
-      const sortedManga = result.manga.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      const sortedManga = result.manga.sort((a: Manga, b: Manga) => (b.rating || 0) - (a.rating || 0));
       
       setManga(sortedManga);
       setCurrentPage(result.currentPage);
