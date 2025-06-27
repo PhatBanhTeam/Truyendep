@@ -68,14 +68,6 @@ export const ChapterReaderPage: React.FC = () => {
           setMangaTitle("Sample Manga Title");
           setChapterTitle("Chapter 1: The Beginning");
 
-          // Save to reading history with fallback data
-          api.readingHistory.addToHistory(
-            mangaId,
-            "Sample Manga Title",
-            chapterId,
-            "Chapter 1: The Beginning",
-            "https://images.pexels.com/photos/1029141/pexels-photo-1029141.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop"
-          );
         }
       } catch (error) {
         console.error("Error loading chapter:", error);
@@ -93,14 +85,6 @@ export const ChapterReaderPage: React.FC = () => {
         setMangaTitle("Sample Manga Title");
         setChapterTitle("Chapter 1: The Beginning");
 
-        // Save to reading history with fallback data
-        api.readingHistory.addToHistory(
-          mangaId || "unknown",
-          "Sample Manga Title",
-          chapterId || "1",
-          "Chapter 1: The Beginning",
-          "https://images.pexels.com/photos/1029141/pexels-photo-1029141.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop"
-        );
       } finally {
         setLoading(false);
       }
@@ -311,6 +295,8 @@ export const ChapterReaderPage: React.FC = () => {
                   value={currentPage}
                   onChange={(e) => setCurrentPage(parseInt(e.target.value))}
                   className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider"
+                  aria-label="Chọn trang truyện"
+                  title="Chọn trang truyện"
                 />
                 <div className="text-center mt-2 text-sm text-gray-400">
                   Trang {currentPage + 1} / {pages.length}
@@ -346,6 +332,3 @@ export const ChapterReaderPage: React.FC = () => {
           <p>H: Ẩn/hiện điều khiển</p>
         </div>
       )}
-    </div>
-  );
-};

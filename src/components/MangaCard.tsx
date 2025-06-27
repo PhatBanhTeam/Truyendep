@@ -10,13 +10,30 @@ import {
   BookOpen,
 } from "lucide-react";
 import { Manga } from "../types/manga";
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  Eye,
+  Star,
+  Calendar,
+  User,
+  TrendingUp,
+  Clock,
+  BookOpen,
+} from "lucide-react";
+import { Manga } from "../types/manga";
 
 interface MangaCardProps {
   manga: Manga;
   showDetails?: boolean;
   variant?: "default" | "compact" | "featured";
+  variant?: "default" | "compact" | "featured";
 }
 
+export const MangaCard: React.FC<MangaCardProps> = ({
+  manga,
+  showDetails = true,
+  variant = "default",
 export const MangaCard: React.FC<MangaCardProps> = ({
   manga,
   showDetails = true,
@@ -34,6 +51,10 @@ export const MangaCard: React.FC<MangaCardProps> = ({
     completed: "Hoàn thành",
     hiatus: "Tạm ngưng",
     cancelled: "Đã hủy",
+    ongoing: "Đang tiến hành",
+    completed: "Hoàn thành",
+    hiatus: "Tạm ngưng",
+    cancelled: "Đã hủy",
   };
 
   const formatViews = (views: number) => {
@@ -42,6 +63,10 @@ export const MangaCard: React.FC<MangaCardProps> = ({
     return views.toString();
   };
 
+  const isNew =
+    manga.lastUpdated &&
+    new Date(manga.lastUpdated) >
+      new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
   const isNew =
     manga.lastUpdated &&
     new Date(manga.lastUpdated) >
@@ -61,15 +86,24 @@ export const MangaCard: React.FC<MangaCardProps> = ({
             onError={(e) => {
               (e.target as HTMLImageElement).src =
                 "https://images.pexels.com/photos/1029141/pexels-photo-1029141.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop";
+              (e.target as HTMLImageElement).src =
+                "https://images.pexels.com/photos/1029141/pexels-photo-1029141.jpeg?auto=compress&cs=tinysrgb&w=300&h=400&fit=crop";
             }}
           />
+
 
           {/* Overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
+
           {/* Status Badge */}
           {manga.status && (
             <div className="absolute top-2 left-2">
+              <span
+                className={`px-2 py-1 text-xs font-medium rounded-full border ${
+                  statusColors[manga.status as keyof typeof statusColors]
+                }`}
+              >
               <span
                 className={`px-2 py-1 text-xs font-medium rounded-full border ${
                   statusColors[manga.status as keyof typeof statusColors]
@@ -80,6 +114,7 @@ export const MangaCard: React.FC<MangaCardProps> = ({
             </div>
           )}
 
+
           {/* Rating Badge */}
           {manga.rating && (
             <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-white px-2 py-1 rounded-full flex items-center space-x-1">
@@ -87,6 +122,7 @@ export const MangaCard: React.FC<MangaCardProps> = ({
               <span className="text-xs font-medium">{manga.rating}</span>
             </div>
           )}
+
 
           {/* New/Hot Badges */}
           <div className="absolute bottom-2 left-2 flex space-x-1">
@@ -104,6 +140,7 @@ export const MangaCard: React.FC<MangaCardProps> = ({
             )}
           </div>
 
+
           {/* Quick Action Button */}
           <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div className="bg-primary-600 text-white p-2 rounded-full hover:bg-primary-700 transition-colors">
@@ -117,8 +154,10 @@ export const MangaCard: React.FC<MangaCardProps> = ({
             {manga.title}
           </h3>
 
+
           {showDetails && (
             <>
+              {manga.description && variant !== "compact" && (
               {manga.description && variant !== "compact" && (
                 <p className="text-sm text-gray-600 line-clamp-2 mb-3 leading-relaxed">
                   {manga.description}
@@ -140,12 +179,21 @@ export const MangaCard: React.FC<MangaCardProps> = ({
                       <span className="font-medium">
                         {formatViews(manga.views)}
                       </span>
+                      <span className="font-medium">
+                        {formatViews(manga.views)}
+                      </span>
                     </div>
                   )}
+
 
                   {manga.lastUpdated && (
                     <div className="flex items-center space-x-1">
                       <Calendar className="h-3 w-3" />
+                      <span>
+                        {new Date(manga.lastUpdated).toLocaleDateString(
+                          "vi-VN"
+                        )}
+                      </span>
                       <span>
                         {new Date(manga.lastUpdated).toLocaleDateString(
                           "vi-VN"
@@ -168,7 +216,19 @@ export const MangaCard: React.FC<MangaCardProps> = ({
                         </span>
                       ))}
                     {manga.genres.length > (variant === "compact" ? 2 : 3) && (
+                    {manga.genres
+                      .slice(0, variant === "compact" ? 2 : 3)
+                      .map((genre) => (
+                        <span
+                          key={genre}
+                          className="px-2 py-1 text-xs bg-gradient-to-r from-gray-100 to-gray-50 text-gray-700 rounded-full border border-gray-200 hover:from-primary-100 hover:to-primary-50 hover:text-primary-700 hover:border-primary-200 transition-all duration-200"
+                        >
+                          {genre}
+                        </span>
+                      ))}
+                    {manga.genres.length > (variant === "compact" ? 2 : 3) && (
                       <span className="px-2 py-1 text-xs bg-gray-100 text-gray-700 rounded-full border border-gray-200">
+                        +{manga.genres.length - (variant === "compact" ? 2 : 3)}
                         +{manga.genres.length - (variant === "compact" ? 2 : 3)}
                       </span>
                     )}
@@ -183,6 +243,9 @@ export const MangaCard: React.FC<MangaCardProps> = ({
                       <span className="font-medium text-primary-600">
                         {manga.latestChapter}
                       </span>
+                      <span className="font-medium text-primary-600">
+                        {manga.latestChapter}
+                      </span>
                     </div>
                   </div>
                 )}
@@ -194,3 +257,4 @@ export const MangaCard: React.FC<MangaCardProps> = ({
     </div>
   );
 };
+
