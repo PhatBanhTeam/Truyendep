@@ -55,9 +55,19 @@ export const ChapterReaderPage: React.FC = () => {
         if (mangaData) {
           setMangaTitle(mangaData.title);
           setChapterTitle(`Chapter ${chapterId}`);
+
+          // Save to reading history
+          api.readingHistory.addToHistory(
+            mangaId,
+            mangaData.title,
+            chapterId,
+            `Chapter ${chapterId}`,
+            mangaData.coverUrl
+          );
         } else {
           setMangaTitle("Sample Manga Title");
           setChapterTitle("Chapter 1: The Beginning");
+
         }
       } catch (error) {
         console.error("Error loading chapter:", error);
@@ -74,6 +84,7 @@ export const ChapterReaderPage: React.FC = () => {
         setPages(mockPages);
         setMangaTitle("Sample Manga Title");
         setChapterTitle("Chapter 1: The Beginning");
+
       } finally {
         setLoading(false);
       }
@@ -321,25 +332,3 @@ export const ChapterReaderPage: React.FC = () => {
           <p>H: Ẩn/hiện điều khiển</p>
         </div>
       )}
-
-      <style>{`
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          height: 16px;
-          width: 16px;
-          border-radius: 50%;
-          background: #3b82f6;
-          cursor: pointer;
-        }
-        .slider::-moz-range-thumb {
-          height: 16px;
-          width: 16px;
-          border-radius: 50%;
-          background: #3b82f6;
-          cursor: pointer;
-          border: none;
-        }
-      `}</style>
-    </div>
-  );
-};

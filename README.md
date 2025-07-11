@@ -2,9 +2,22 @@
 
 Dự án website đọc truyện tranh online được xây dựng bằng React, TypeScript, và Vite. Đây là một sản phẩm học tập nhằm áp dụng các kiến thức về phát triển frontend hiện đại và quy trình làm việc nhóm chuyên nghiệp.
 
+## 📄 Giấy phép
+
+Dự án này được phát hành dưới giấy phép **MIT License**. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+
+### Trạng thái Open Source
+
+✅ **Có, dự án TruyenDep là một dự án Open Source**
+
+- Mã nguồn được công khai trên GitHub
+- Sử dụng giấy phép MIT - một trong những giấy phép mã nguồn mở phổ biến nhất
+- Cho phép cộng đồng đóng góp, sử dụng và phát triển
+
 ## Quản lý dự án
 
 Dự án này được quản lý và theo dõi tiến độ bằng các công cụ:
+
 - **Jira:** Để quản lý các task, user story, và sprint.
 - **GitHub:** Để quản lý mã nguồn, review code qua Pull Request.
 - **Git Flow:** Áp dụng mô hình Git Flow rút gọn với các nhánh `main`, `develop`, và các nhánh `feature/*` cho từng tính năng hoặc thành viên.
@@ -26,38 +39,25 @@ Dự án này được quản lý và theo dõi tiến độ bằng các công c
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **Routing:** [React Router DOM](https://reactrouter.com/)
 - **Icons:** [Lucide React](https://lucide.dev/)
-- **API truyen:** [otruyen](https://docs.otruyenapi.com/#/comic/get_truyen_tranh__slug_)
 
 ## Hướng dẫn cài đặt và chạy Project
 
 local
 
 **1. Clone repository về máy:**
+
 ```bash
 git clone https://github.com/PhatBanhTeam/Truyendep.git
 ```
 
 **2. Di chuyển vào thư mục project:**
+
 ```bash
 cd Truyendep
 ```
 
 **3. Cài đặt các dependencies:**
+
 ```bash
 npm install
 ```
-
-**4. Chạy server phát triển:**
-```bash
-npm run dev
-```
-Sau đó, mở trình duyệt và truy cập vào `http://localhost:5173` (hoặc cổng khác được hiển thị trong terminal).
-
-
-## Ảnh chụp màn hình
-
- ![Trang chủ](https://github.com/user-attachments/assets/414da4c6-713b-411e-81ee-f54d8b77ed61) |
- ![Trang Đăng nhập](https://github.com/user-attachments/assets/b4c6cb05-7a1c-4e7b-b1f5-d10ab1064d0f) | 
- ![Trang Đăng ký](https://github.com/user-attachments/assets/ef59d9f5-824f-48b5-804f-53cf49f2ca3e) |
-
-
