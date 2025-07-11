@@ -2,6 +2,18 @@
 
 Dự án website đọc truyện tranh online được xây dựng bằng React, TypeScript, và Vite. Đây là một sản phẩm học tập nhằm áp dụng các kiến thức về phát triển frontend hiện đại và quy trình làm việc nhóm chuyên nghiệp.
 
+## 📄 Giấy phép
+
+Dự án này được phát hành dưới giấy phép **MIT License**. Xem file [LICENSE](LICENSE) để biết thêm chi tiết.
+
+### Trạng thái Open Source
+
+✅ **Có, dự án TruyenDep là một dự án Open Source**
+
+- Mã nguồn được công khai trên GitHub
+- Sử dụng giấy phép MIT - một trong những giấy phép mã nguồn mở phổ biến nhất
+- Cho phép cộng đồng đóng góp, sử dụng và phát triển
+
 ## Quản lý dự án
 
 Dự án này được quản lý và theo dõi tiến độ bằng các công cụ:
@@ -27,7 +39,6 @@ Dự án này được quản lý và theo dõi tiến độ bằng các công c
 - **Styling:** [Tailwind CSS](https://tailwindcss.com/)
 - **Routing:** [React Router DOM](https://reactrouter.com/)
 - **Icons:** [Lucide React](https://lucide.dev/)
-
 
 ## Hướng dẫn cài đặt và chạy Project
 
